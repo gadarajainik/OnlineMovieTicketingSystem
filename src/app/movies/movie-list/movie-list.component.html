@@ -1,0 +1,22 @@
+<div class="row">
+        
+    <a (click)="OnSelectedMovie(movie)" style="cursor: pointer;" *ngFor="let movie of movies" >
+        <div class="col-xl-4 col-lg-4  col-md-6" style="margin-bottom: 50px;" >
+            <div class="card mycard shadow" style="width:250px">
+                <img class="card-img-top" src="{{movie.imgurl}}" alt="Card image" style="width:100%;height:300px;">
+                <div class="card-body mycardbody">
+                    <blockquote class="blockquote">
+                        <span class="myfont">{{movie.name}}</span><br>
+                        <footer class="text-secondary cardfooter">{{movie.description}}</footer>
+                        <span class="fa fa-star checked "></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star-half checked"></span>
+                    </blockquote>
+                </div>
+            </div>
+
+        </div>
+    </a>
+</div>

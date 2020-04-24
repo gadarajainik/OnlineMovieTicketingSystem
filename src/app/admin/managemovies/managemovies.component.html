@@ -1,0 +1,123 @@
+<div class="container" style="text-align: center;margin-top: 70px;">
+    <!-- <select (change)="OnChange($event)" >
+        <option>Select</option>
+        <option [value]='city' *ngFor="let city of cities">{{city}}</option>
+    </select>&nbsp;&nbsp;&nbsp; -->
+    <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#Updatemodal">Add Movies</button>
+    <div style="margin-top: 50px;">
+        <h2>Movie Details</h2>
+    </div>
+    <table class="table" style="margin:50px 0px 100px 0px;">
+        <thead class="thead-dark">
+            <tr>
+                <th>Movie ID</th>
+                <th>Movie Name</th>
+                <th>Movie Image</th>
+                <th>Description</th>
+                <th>Duration</th>
+                <th>Released Date</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let movie of movies" style="background-color: white;">
+                <td>{{movie.mid}}</td>
+                <td>{{movie.name}}</td>
+                <td>{{movie.imgurl}}</td>
+                <td>{{movie.description}}</td>
+                <td>{{movie.duration}}</td>
+                <td>{{movie.released}}</td>
+                <td><button class="btn btn-success" data-toggle="modal" data-target="#Updatemodal">Update</button></td>
+                <td><button class="btn btn-danger" (click)="deletemovie(movie)">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="container-fluid ">
+        <div class="modal fade shadow" id="Updatemodal">
+            <div class="modal-dialog modal-md ">
+                <div class="modal-content bg shadow" style="border-radius: 0px;">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Movie</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card bg ">
+                            <article class="card-body mx-auto" style="max-width: inherit;max-height: 600px">
+                                <div class="text-danger">{{errormsg}}</div>
+                                <form #update="ngForm" (ngSubmit)="addmovie()">
+                                    <div class="form-group input-group">
+
+                                        <input name="mid" class="form-control" placeholder="Movieid" type="number"
+                                            [(ngModel)]="mid" required #username_ctl="ngModel">
+                                        <div style="display: block;"
+                                            *ngIf=" username_ctl.invalid && (username_ctl.dirty || username_ctl.touched)">
+                                            <div class="text-danger" *ngIf="username_ctl.errors.required;"> Movie ID is
+                                                required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <input name="name" class="form-control" placeholder="Movie name" type="text"
+                                            [(ngModel)]="name" #fullname_ctl="ngModel" required>
+                                        <div
+                                            *ngIf="fullname_ctl.invalid && (fullname_ctl.dirty || fullname_ctl.touched)">
+                                            <div class="text-danger" *ngIf="fullname_ctl.errors.required">
+                                                Movie name is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <input name="imgurl" class="form-control" placeholder="Image URL" type="text"
+                                            [(ngModel)]="imgurl" #email_ctl="ngModel" required>
+                                        <div *ngIf="email_ctl.invalid && (email_ctl.dirty || email_ctl.touched)">
+                                            <div class="text-danger" *ngIf="email_ctl.errors.required">
+                                                Image URL is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <input name="description" class="form-control" placeholder="Description"
+                                            type="text" [(ngModel)]="description" #description_ctl="ngModel" required>
+                                        <div
+                                            *ngIf="description_ctl.invalid && (description_ctl.dirty || description_ctl.touched)">
+                                            <div class="text-danger" *ngIf="description_ctl.errors.required">
+                                                Description is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <input name="duration" class="form-control" placeholder="Duration"
+                                            type="text" [(ngModel)]="duration" #duration_ctl="ngModel" required>
+                                        <div
+                                            *ngIf="duration_ctl.invalid && (duration_ctl.dirty || duration_ctl.touched)">
+                                            <div class="text-danger" *ngIf="duration_ctl.errors.required">
+                                                Duration is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <input name="released" class="form-control" placeholder="Released Date"
+                                            type="text" [(ngModel)]="released" #released_ctl="ngModel" required>
+                                        <div
+                                            *ngIf="released_ctl.invalid && (released_ctl.dirty || released_ctl.touched)">
+                                            <div class="text-danger" *ngIf="released_ctl.errors.required">
+                                                Release Date is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" [disabled]="!update.form.valid"
+                                            class="btn btn-primary btn-block">
+                                            Add Movie </button>
+                                    </div>
+
+                                </form>
+                            </article>
+                        </div>
+                    </div> <!-- card.// -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

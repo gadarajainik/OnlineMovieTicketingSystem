@@ -1,0 +1,99 @@
+<table class="table seatmatrix shadow" style="background-color: white;">
+
+    <tr>
+        <td>A</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td *ngFor="let x of matrix[0]"><button [disabled]="x==='X'" class="myseat" (click)="seatselected($event,x)"
+                ><span class="fas fa-couch" [class.booked]="x === 'X'"></span></button>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <ng-container *ngFor="let y of matrix;let j=index">
+        <tr *ngIf="j&gt;0 && j&lt;5">
+            <td>B</td>
+            <td></td>
+            <ng-container *ngFor="let x of y; let i=index">
+                <td *ngIf="i&lt;3"><button [disabled]="x==='X'" class="myseat" (click)="seatselected($event,x)"
+                        ><span class="fas fa-couch" [class.booked]="x === 'X'"></span></button>
+                </td>
+            </ng-container>
+            <td>
+            </td>
+            <ng-container *ngFor="let x of y; let i=index">
+                <td *ngIf="i&gt;2 && i&lt;11"><button [disabled]="x==='X'" class="myseat"
+                        (click)="seatselected($event,x)" ><span class="fas fa-couch"
+                            [class.booked]="x === 'X'"></span></button>
+                </td>
+            </ng-container>
+            <td>
+            </td>
+            <ng-container *ngFor="let x of y; let i=index">
+                <td *ngIf="i&gt;10"><button [disabled]="x==='X'" class="myseat" (click)="seatselected($event,x)"
+                        ><span class="fas fa-couch" [class.booked]="x === 'X'"></span></button>
+                </td>
+            </ng-container>
+        </tr>
+    </ng-container>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <ng-container *ngFor="let y of matrix;let j=index">
+        <tr *ngIf="j&gt;4">
+            <td>B</td>
+            <td></td>
+            <ng-container *ngFor="let x of y; let i=index">
+                <td *ngIf="i&lt;3"><button [disabled]="x==='X'" class="myseat" (click)="seatselected($event,x)"
+                        ><span class="fas fa-couch" [class.booked]="x === 'X'"></span></button>
+                </td>
+            </ng-container>
+            <td>
+            </td>
+            <ng-container *ngFor="let x of y; let i=index">
+                <td *ngIf="i&gt;2 && i&lt;11"><button [disabled]="x==='X'" class="myseat"
+                        (click)="seatselected($event,x)" ><span class="fas fa-couch"
+                            [class.booked]="x === 'X'"></span></button>
+                </td>
+            </ng-container>
+            <td>
+            </td>
+            <ng-container *ngFor="let x of y; let i=index">
+                <td *ngIf="i&gt;10"><button [disabled]="x==='X'" class="myseat" (click)="seatselected($event,x)"
+                        ><span class="fas fa-couch" [class.booked]="x === 'X'"></span></button>
+                </td>
+            </ng-container>
+        </tr>
+    </ng-container>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="10" style="border-bottom:3px solid black;text-align: center;">Screen this way</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr> 
+</table>

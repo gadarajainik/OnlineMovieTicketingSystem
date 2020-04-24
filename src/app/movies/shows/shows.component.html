@@ -1,0 +1,76 @@
+<div class="upper container-fluid">
+    <div
+        style="margin-left:30%;margin-top:36px;float:left;width:250px;height:280px;border-radius:3px;border: 1px solid gainsboro;">
+        <img class="card-img-top" src="{{movie.imgurl}}" alt="Card image" height="100%" width="100%">
+
+    </div>
+    <div class="text-secondary" style="margin-left:25px;margin-top:45px;float: left">
+        <div>
+            <h2 class="text-white">{{movie.name}}</h2>
+        </div>
+        <div><span>{{movie.description}}</span></div>
+        <div><span>{{movie.duration}}</span></div>
+        <div><span>{{movie.released}}</span></div>
+    </div>
+
+</div>
+<nav class="navbar navbar-expand-sm bg-light navbar-light shadow" style="margin-top: 25px;">
+    <ul id="dates" class="navbar-nav">
+        <li class="nav-item active">
+            <div class="rounded bg-dark active" style="text-align:center;height: 100%;width: 100%;">
+                <a id="date" class="nav-link text-white" style="cursor: pointer"><b>21</b> | Mon</a>
+            </div>
+        </li>&nbsp;
+        <li class="nav-item">
+            <div class="rounded" style="text-align:center;height: 100%;width: 100%;">
+                <a id="date" class="nav-link text-dark" style="cursor: pointer"><b>22</b> | Tue</a>
+            </div>
+        </li>&nbsp;
+        <li class="nav-item">
+            <div class="rounded" style="text-align:center;height: 100%;width: 100%;">
+                <a id="date" class="nav-link text-dark" style="cursor: pointer"><b>23</b> | Wed</a>
+            </div>
+        </li>&nbsp;
+        <li class="nav-item">
+            <div class="rounded" style="text-align:center;height: 100%;width: 100%;">
+                <a id="date" class="nav-link text-dark" style="cursor: pointer"><b>24</b> | Thu</a>
+            </div>
+        </li>
+    </ul>
+    <ul class="ml-auto">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </ul>
+</nav>
+<div class="container-fluid" style="background-color:white;margin-top:50px;padding: 20px;">
+    <div *ngFor="let theatre of theatres" style="border-top:1px solid gray;padding:20px 0;">
+        <ng-container>
+            <div style="float: left;margin-right: 80px;max-height:700px;width:250px;"><b>{{theatre.theatrename}}</b>
+                <div>
+                    <p class="text-secondary" style="font-size:12px;">{{theatre.theatreaddress}}</p>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <ng-container *ngFor="let shows of movieshows">
+                        <ng-container *ngIf="theatre.theatreid===shows.theatreid">
+                            <div class="col-xl-2 col-lg-2 col-md-3" style="margin-bottom:20px;">
+                                <ng-template #seatdetail><b>Available:</b>{{shows.seatsavailable}}<br/>
+                                <b>Price:</b>{{shows.price | currency:'INR'}}</ng-template>
+                                <button [disabled]="shows.seatsavailable===0" class="btn btn-lg"
+                                    (click)="selectedshow(theatre,shows)"
+                                    [ngbPopover]="seatdetail" triggers="mouseenter:mouseleave"
+                                    style="border-color: gray;font-size: 12.8px;cursor: pointer;">{{shows.showtime}}</button>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+</div>

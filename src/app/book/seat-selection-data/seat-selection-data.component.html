@@ -1,0 +1,33 @@
+<div class="bg-white" style="float: right;width:320px;max-height:630px;padding:0px 20px;">
+    <div style="padding:25px;border-bottom:1px solid gray;overflow: auto;">
+        <img src="{{movie.imgurl}}" style="float: right;" height="80px;">
+        <div>
+            <h3>{{movie.name}}</h3>
+        </div>
+        <div class="text-secondary" style="font-size: 14px;">{{movie.description}}</div>
+    </div>
+    <div style="padding:25px;border-bottom:1px solid gray; ">
+        <div class="text-secondary" style="font-size: 14px;">THEATER</div>
+        <div>
+            <h6>{{theatre.theatrename}}|</h6>
+        </div>
+        <div>
+            <h6>Screen:{{show.screen}}</h6>
+        </div>
+    </div>
+    <div style="padding:25px;border-bottom:1px solid gray; ">
+        <div class="text-secondary" style="font-size: 14px;">SHOWTIME</div>
+        <div><h6>Wed ,21 Oct {{show.showtime}}</h6></div>
+    </div>
+    <div style="padding:25px;border-bottom:1px solid gray; ">
+        <div class="text-secondary" style="font-size: 14px;">SEAT(S)</div>
+        <div id="selectedseat">{{seats}}</div>
+    </div>
+    <div style="padding:25px;">
+        <button id="total" [disabled]="total==='0'"  (click)="checkout()" class="btn btn-primary" style="border-radius:0px;width:100%;height: 50px;">Pay
+            {{total | currency:'INR'}}</button>
+    </div>
+    <div>
+
+    </div>
+</div>

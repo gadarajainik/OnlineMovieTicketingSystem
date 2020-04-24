@@ -1,0 +1,277 @@
+<div class="container-fluid" style="margin-top: 40px;overflow:auto">
+  <div style="float: right;position: static;max-height:1000px">
+    <div class="shadow" style="background-color: white;padding:25px 20px;width:310px;max-height:650px">
+
+      <div>
+        <div class="text-primary" style="font-size: 20px;"><b>BOOKING SUMMARY</b></div>
+      </div><br />
+      <div style="display: inline-block;">
+        <h4>{{movie.name}}</h4>
+      </div><br/>
+      <div class="text-secondary" style="font-size: 13px;">({{theatre.theatrename}})</div><br />
+      <div style="margin-bottom: 20px;max-height: 150px;">
+        <div style="float: right;">{{total | currency:'INR'}}</div>
+        <div>
+          <h6>{{seats}}({{numberoftickets}} tickets)</h6>
+        </div>
+        <div class="text-secondary" style="font-size: 14px;">{{show.showtime}}|SCREEN {{show.screen}}</div>
+      </div>
+      <div>
+        <div style="float: right;"> + {{internethandlingfees | currency:'INR'}}</div>
+        <div>
+          <h6>Internet handling fees</h6>
+          <div class="text-secondary" style="font-size: 13px;float: right;">{{convinencefees | currency:'INR'}}</div>
+          <div class="text-secondary" style="font-size: 13px;">Convinence fees</div>
+          <div class="text-secondary" style="font-size: 13px;float: right;">{{gst | currency:'INR'}}</div>
+          <div class="text-secondary" style="font-size: 13px;">Integrated GST @18%</div>
+        </div>
+        <div style="border-top:1px solid gray;margin-top:8px;padding:5px 0px;">
+          <div style="float: right;">{{grandtotal | currency:'INR'}}</div>
+          <div>
+            <h5>Sub Amount</h5>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid gray;border-bottom:1px solid gray;padding:10px 0px;">
+        <div>
+          <h5>PROMOTION CODE</h5>
+        </div>
+        <div id="promo" class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Promo Code">
+          <div class="input-group-append">
+            <button class="btn btn-dark" type="submit">APPLY</button>
+          </div>
+        </div>
+      </div>
+      <div style="background-color:blanchedalmond;margin-top:20px;height: 40px;padding: 8px;">
+        <div style="float: right">{{grandtotal | currency:'INR'}}</div>
+        <div>
+          <h6>Amount Payable</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="width:1000px;max-height:650px;">
+    <div class="caret" style="width:100%;background-color: white;margin-bottom: 10px;">
+      <form #userdetails="ngForm" (ngSubmit)="onContinue()">
+        <button id="userdetailbtn" class="btn text-white"
+          style="background-color:#49ba8e;padding: 15px;border-radius:0px;width:100%;text-align: left;">
+          Share your Contact Details
+        </button>
+        <div id="userdetaildiv" style="padding: 25px;overflow: hidden;">
+          <div style="float: left;margin-left:10px;">
+            <input name="userfullname" class="form-control" style="width:250px;" [(ngModel)]="fullname" type="text"
+              placeholder="Fullname" required #fullname_ctl="ngModel"><br />
+            <div *ngIf="fullname_ctl.invalid && (fullname_ctl.dirty || fullname_ctl.touched)">
+              <div class="text-danger" *ngIf="fullname_ctl.errors.required">
+                Fullname is required.
+              </div>
+            </div>
+          </div>
+          <div style="float: left;margin-left:10px;">
+            <input name="useremail" class="form-control" style="width:250px;" [(ngModel)]="useremail" type="email"
+              placeholder="Email" [email]=true required #email_ctl="ngModel"><br />
+            <div *ngIf="email_ctl.invalid && (email_ctl.dirty || email_ctl.touched)">
+              <div class="text-danger" *ngIf="email_ctl.errors.required">
+                Email is required.
+              </div>
+              <div class="text-danger" *ngIf="email_ctl.errors.email">
+                Enter proper Email.
+              </div>
+            </div>
+          </div>
+          <div style="float: left;margin-left:10px;">
+            <input name="usermobile" id="mobile" class="form-control" style="width:250px;" [(ngModel)]="usermobile"
+              type="number" maxlength="10" minlength="10" required placeholder="Mobile Number"
+              #mobile_ctl="ngModel"><br />
+            <div *ngIf="mobile_ctl.invalid && (mobile_ctl.dirty || mobile_ctl.touched)">
+              <div class="text-danger" *ngIf="mobile_ctl.errors.required">
+                Mobile is required.
+              </div>
+              <div class="text-danger" *ngIf="mobile_ctl.errors.maxlength"> Enter
+                proper Mobile number. </div>
+            </div>
+          </div>
+          <div style="float: left;margin-left:10px;">
+            <button type="submit" [disabled]="!userdetails.form.valid" id="userdetailcontinue" class="btn btn-primary"
+              style="width:100px;border-radius: 0px;">Continue</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div style="width:100%;background-color: white;">
+      <button [disabled]="!isvaliduserdetails" id="paymentdetailbtn" class="btn text-secondary"
+        style="background-color:#CAC8C8;padding: 15px;border-radius:0px;width:100%;text-align: left;"
+        data-toggle="collapse">
+        Payment Options
+      </button>
+      <div id="paymentdetaildiv" style="overflow: hidden;display: none;width: 100%;">
+        <div id="payment_options" style="float: left;">
+          <div><button id="card" class="btn text-secondary shadow"
+              style="background-color:white;padding:25px;margin-bottom: 2px;height: 80px;width:190px;border-radius:0px;"
+              (click)="payment_option($event)">Debit/Credit
+              Card</button></div>
+          <div>
+            <button id="netbanking" class="btn text-secondary shadow"
+              style="background-color:#CAC8C8;padding:25px;margin-bottom: 2px;height: 80px;width:190px;border-radius:0px;"
+              (click)="payment_option($event)">Net
+              Banking</button></div>
+          <div>
+            <button id="paytm" class="btn text-secondary shadow"
+              style="background-color:#CAC8C8;padding:25px;margin-bottom: 2px;height: 80px;width:190px;border-radius:0px;"
+              (click)="payment_option($event)">Paytm</button>
+          </div>
+          <div>
+            <button id="upi" class="btn text-secondary shadow"
+              style="background-color:#CAC8C8;padding:25px;margin-bottom: 2px;height: 80px;width:190px;border-radius:0px;"
+              (click)="payment_option($event)">UPI</button>
+          </div>
+        </div>
+        <div id="paymentsections">
+          <div id="cardsection">
+            <div class="shadow"
+              style="background-color:#CAC8C8;height:230px;float:left;width:430px;padding: 15px;margin:50px 50px;border-radius: 5px;">
+              <form #cardpayment="ngForm" (ngSubmit)="book()">
+                <div style="margin-bottom: 10px;">
+                  <div class="text-secondary">Card Number</div>
+                  <div><input class="form-control" type="number" style="width:200px;margin: 5px 0px;font-size: 13px;"
+                      placeholder="Enter Your Card Number" required></div>
+                  <div><input class="form-control" type="text" style="width:200px;font-size: 13px;"
+                      placeholder="Name on the card" required></div>
+                </div>
+                <div>
+                  <div style="float: left;">
+                    <div class="text-secondary">Expiry</div>
+                    <div><input class="form-control" type="number" placeholder="MM"
+                        style="margin-right: 10px;width:65px;float: left;font-size: 13px;" min="00" max="31"
+                        required><input class="form-control"
+                        style="margin-right: 10px;width:65px;float: left;font-size: 13px;" type="number" minlength="4"
+                        maxlength="4" placeholder="YYYY" required>
+                    </div>
+                  </div>
+                  <div style="float: left;">
+                    <div class="text-secondary">CVV</div>
+                    <div><input class="form-control" style="width:70px;font-size: 13px;" minlength="3" maxlength="3"
+                        type="password" placeholder="CVV" required>
+                    </div>
+                  </div><br />
+                  <div style="float:left;margin-left: 10px;">
+                    <button type="submit" class="btn btn-primary">MAKE PAYMENT</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+          <div id="netbankingsection" style="display: none;">
+            <div class="shadow"
+              style="background-color:#CAC8C8;height:230px;float:left;width:430px;padding: 15px;margin:50px 50px;border-radius: 5px;">
+              <div style="margin-bottom: 10px;">
+                <div class="text-secondary">NET BANKCard Number</div>
+                <div><input class="form-control" type="number" style="width:200px;margin: 5px 0px;font-size: 13px;"
+                    placeholder="Enter Your Card Number" required></div>
+                <div><input class="form-control" type="text" style="width:200px;font-size: 13px;"
+                    placeholder="Name on the card" required></div>
+              </div>
+              <div>
+                <div style="float: left;">
+                  <div class="text-secondary">Expiry</div>
+                  <div><input class="form-control" type="number" placeholder="MM"
+                      style="margin-right: 10px;width:65px;float: left;font-size: 13px;" min="00" max="31"
+                      required><input class="form-control"
+                      style="margin-right: 10px;width:65px;float: left;font-size: 13px;" type="number" minlength="4"
+                      maxlength="4" placeholder="YYYY" required>
+
+                  </div>
+                </div>
+                <div style="float: left;">
+                  <div class="text-secondary">CVV</div>
+                  <div><input class="form-control" style="width:70px;font-size: 13px;" minlength="3" maxlength="3"
+                      type="password" placeholder="CVV" required>
+                  </div>
+                </div><br />
+                <div style="float:left;margin-left: 10px;">
+                  <button class="btn btn-primary">MAKE PAYMENT</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div id="paytmsection" style="display: none;">
+            <div class="shadow"
+              style="background-color:#CAC8C8;height:230px;float:left;width:430px;padding: 15px;margin:50px 50px;border-radius: 5px;">
+              <div style="margin-bottom: 10px;">
+                <div class="text-secondary">PAYTMCard Number</div>
+                <div><input class="form-control" type="number" style="width:200px;margin: 5px 0px;font-size: 13px;"
+                    placeholder="Enter Your Card Number" required></div>
+                <div><input class="form-control" type="text" style="width:200px;font-size: 13px;"
+                    placeholder="Name on the card" required></div>
+              </div>
+              <div>
+                <div style="float: left;">
+                  <div class="text-secondary">Expiry</div>
+                  <div><input class="form-control" type="number" placeholder="MM"
+                      style="margin-right: 10px;width:65px;float: left;font-size: 13px;" min="00" max="31"
+                      required><input class="form-control"
+                      style="margin-right: 10px;width:65px;float: left;font-size: 13px;" type="number" minlength="4"
+                      maxlength="4" placeholder="YYYY" required>
+
+                  </div>
+                </div>
+                <div style="float: left;">
+                  <div class="text-secondary">CVV</div>
+                  <div><input class="form-control" style="width:70px;font-size: 13px;" minlength="3" maxlength="3"
+                      type="password" placeholder="CVV" required>
+                  </div>
+                </div><br />
+                <div style="float:left;margin-left: 10px;">
+                  <button class="btn btn-primary">MAKE PAYMENT</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div id="upisection" style="display: none;">
+            <div class="shadow"
+              style="background-color:#CAC8C8;height:230px;float:left;width:430px;padding: 15px;margin:50px 50px;border-radius: 5px;">
+              <div style="margin-bottom: 10px;">
+                <div class="text-secondary">UPICard Number</div>
+                <div><input class="form-control" type="number" style="width:200px;margin: 5px 0px;font-size: 13px;"
+                    placeholder="Enter Your Card Number" required></div>
+                <div><input class="form-control" type="text" style="width:200px;font-size: 13px;"
+                    placeholder="Name on the card" required></div>
+              </div>
+              <div>
+                <div style="float: left;">
+                  <div class="text-secondary">Expiry</div>
+                  <div><input class="form-control" type="number" placeholder="MM"
+                      style="margin-right: 10px;width:65px;float: left;font-size: 13px;" min="00" max="31"
+                      required><input class="form-control"
+                      style="margin-right: 10px;width:65px;float: left;font-size: 13px;" type="number" minlength="4"
+                      maxlength="4" placeholder="YYYY" required>
+
+                  </div>
+                </div>
+                <div style="float: left;">
+                  <div class="text-secondary">CVV</div>
+                  <div><input class="form-control" style="width:70px;font-size: 13px;" minlength="3" maxlength="3"
+                      type="password" placeholder="CVV" required>
+                  </div>
+                </div><br />
+                <div style="float:left;margin-left: 10px;">
+                  <button class="btn btn-primary">MAKE PAYMENT</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
